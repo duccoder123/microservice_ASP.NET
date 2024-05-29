@@ -12,16 +12,59 @@ namespace Mango.Service.AuthAPI.Service
         private readonly AppDbContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IJwtTokenGenerator _jwtTokenGenerator;
         public AuthService(AppDbContext db, 
-            UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+            UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IJwtTokenGenerator jwtTokenGenerator)
         {
             _db = db;
-            _userManager= userManager;
-            _roleManager= roleManager;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _jwtTokenGenerator = jwtTokenGenerator;
         }
-        public Task<LoginRequestDto> Login(LoginRequestDto loginRequestDto)
+
+        public async Task<bool> AssignRole(string email, string roleName)
         {
-            throw new NotImplementedException();
+            var existUser = _db.applicationUsers.FirstOrDefault(u => u.Email.ToLower() == email.ToLower());
+            if(existUser is not null)
+            {
+                if(!_roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
+                {
+                    // create role if don't exist 
+                    _roleManager.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
+                }
+                await _userManager.AddToRoleAsync(existUser, roleName);
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
+        {
+            var existUser = _db.applicationUsers.FirstOrDefault(u => u.UserName.ToLower() == loginRequestDto.UserName.ToLower());
+            bool isValid = await _userManager.CheckPasswordAsync(existUser, loginRequestDto.Password);
+            if(existUser is null || !isValid)
+            {
+                return new LoginResponseDto()
+                {
+                    User = null, 
+                    Token = ""
+                };
+            }
+
+            var token = _jwtTokenGenerator.GenerateToken(existUser);
+            UserDto user = new UserDto()
+            {
+                Email = existUser.Email,
+                ID = existUser.Id,
+                Name = existUser.Name,
+                PhoneNumber = existUser.PhoneNumber
+            };
+            LoginResponseDto loginResponseDto = new LoginResponseDto()
+            {
+                User = user,
+                Token = token,
+            };
+            return loginResponseDto;
         }
 
         public async Task<string> Register(RegistrationRequestDto registrationRequestDto)
@@ -58,7 +101,7 @@ namespace Mango.Service.AuthAPI.Service
             }
             catch(Exception ex)
             {
-
+                
             }
             return "Error Encountered";
         }
