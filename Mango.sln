@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mango.Service.CouponAPI", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mango.Web", "Mango.Web\Mango.Web.csproj", "{D029AEC0-3E51-44A2-883F-44D378344354}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mango.Service.AuthAPI", "Mango.Service.AuthAPI\Mango.Service.AuthAPI.csproj", "{D0D126BE-1EC9-4994-A537-DBC3AD0799A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mango.Service.AuthAPI", "Mango.Service.AuthAPI\Mango.Service.AuthAPI.csproj", "{D0D126BE-1EC9-4994-A537-DBC3AD0799A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mango.Service.ProductAPI", "Mango.Service.ProductAPI\Mango.Service.ProductAPI.csproj", "{281DA744-7B78-4089-BFCF-533B5E6D0136}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{D0D126BE-1EC9-4994-A537-DBC3AD0799A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0D126BE-1EC9-4994-A537-DBC3AD0799A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0D126BE-1EC9-4994-A537-DBC3AD0799A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{281DA744-7B78-4089-BFCF-533B5E6D0136}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{281DA744-7B78-4089-BFCF-533B5E6D0136}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{281DA744-7B78-4089-BFCF-533B5E6D0136}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{281DA744-7B78-4089-BFCF-533B5E6D0136}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{E62A401E-83FC-4083-A1F8-070D3CED188A} = {84EB3E58-31E6-4499-882C-05F1B94AA620}
 		{D029AEC0-3E51-44A2-883F-44D378344354} = {FA631A48-276E-4F50-A925-83C43C849557}
 		{D0D126BE-1EC9-4994-A537-DBC3AD0799A1} = {84EB3E58-31E6-4499-882C-05F1B94AA620}
+		{281DA744-7B78-4089-BFCF-533B5E6D0136} = {84EB3E58-31E6-4499-882C-05F1B94AA620}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CEECC005-4136-464B-98DE-8101940AB197}
