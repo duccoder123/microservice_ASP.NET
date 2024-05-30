@@ -2,6 +2,7 @@
 using Mango.Service.CouponAPI.Data;
 using Mango.Service.CouponAPI.Models;
 using Mango.Service.CouponAPI.Models.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static Azure.Core.HttpHeader;
 
@@ -9,6 +10,7 @@ namespace Mango.Service.CouponAPI.Controllers
 {
     [Route("api/coupon")]
     [ApiController]
+    [Authorize]
     public class CouponAPIController : Controller
     {
         private readonly AppDbContext _context;
@@ -68,6 +70,7 @@ namespace Mango.Service.CouponAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles ="ADMIN")]
         public ResponseDto CreateCoupon([FromBody] CouponDto coupon)
         {
             try
@@ -85,6 +88,8 @@ namespace Mango.Service.CouponAPI.Controllers
             return _response;
         }
         [HttpPut]
+        [Authorize(Roles = "ADMIN")]
+          
         public ResponseDto UpdateCoupon([FromBody] CouponDto couponDto)
         {
             try
@@ -104,6 +109,8 @@ namespace Mango.Service.CouponAPI.Controllers
 
         [HttpDelete]
         [Route("{id:int}")]
+        [Authorize(Roles = "ADMIN")]
+
         public ResponseDto DeleteCoupon(int id)
         {
             try

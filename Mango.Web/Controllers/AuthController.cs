@@ -78,6 +78,10 @@ namespace Mango.Web.Controllers
                     return RedirectToAction(nameof(Login));
                 }
             }
+            else
+            {
+                TempData["error"] = result.StatusMessage;
+            }
             var roleList = new List<SelectListItem>()
             {
                 new SelectListItem{Text=SD.RoleAdmin, Value =SD.RoleAdmin},
@@ -109,9 +113,10 @@ namespace Mango.Web.Controllers
                 jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Name).Value));
             identity.AddClaim(new Claim(ClaimTypes.Name,
                 jwt.Claims.FirstOrDefault(u => u.Type == JwtRegisteredClaimNames.Email).Value));
-
+            identity.AddClaim(new Claim(ClaimTypes.Role,
+                jwt.Claims.FirstOrDefault(u => u.Type == "role").Value));
             var principal = new ClaimsPrincipal(identity);
-            await HttpContext.SignInAsync(principal);   
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);   
         }
     }
 }
